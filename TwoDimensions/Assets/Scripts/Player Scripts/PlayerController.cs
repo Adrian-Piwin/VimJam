@@ -14,10 +14,11 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
     public LayerMask groundLayers;
 
+    private PlayerAnimation playerAnimation;
     private Rigidbody2D body;
     private BoxCollider2D boxCollider2d;
     private float vertical, horizontal;
-    public bool isGrounded = false;
+    private bool isGrounded = false;
 
     // Jumping 
     private float jumpTimeCounter;
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerAnimation = GetComponent<PlayerAnimation>();
         body = GetComponent<Rigidbody2D>();
         boxCollider2d = GetComponent<BoxCollider2D>();
     }
@@ -36,6 +38,7 @@ public class PlayerController : MonoBehaviour
         vertical = Input.GetAxisRaw("Vertical");
         horizontal = Input.GetAxisRaw("Horizontal");
 
+        flipSprite();
         jump();
     }
 
@@ -47,6 +50,15 @@ public class PlayerController : MonoBehaviour
 
     // Allow movement
     private void move(){
+        // Set running animation
+        if (horizontal != 0 && isGrounded)
+            playerAnimation.SetAnimation("running");
+        else if (!isGrounded)
+            playerAnimation.SetAnimation("jump");
+        else
+            playerAnimation.SetAnimation("idle");
+
+        // Move player
         body.velocity = new Vector2 (horizontal * speed, body.velocity.y);
     }
 
@@ -80,6 +92,15 @@ public class PlayerController : MonoBehaviour
         // Reset jump
         if (Input.GetKeyUp("space")){
             isJumping = false;
+        }
+    }
+
+    // Flip sprite on direction change
+    private void flipSprite(){
+        if (horizontal == 1){
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }else if (horizontal == -1){
+            transform.rotation = Quaternion.Euler(0, -180, 0);
         }
     }
 
