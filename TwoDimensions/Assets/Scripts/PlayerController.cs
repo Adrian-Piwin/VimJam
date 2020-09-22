@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
 
     // Allow movement
     private void move(){
-        body.velocity = new Vector2 (horizontal * speed * Time.deltaTime, body.velocity.y);
+        body.velocity = new Vector2 (horizontal * speed, body.velocity.y);
     }
 
     // Better falling physics
