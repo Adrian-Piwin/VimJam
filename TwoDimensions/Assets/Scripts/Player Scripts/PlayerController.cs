@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Player Settings")]
     public float speed = 5f;
+    public float crouchSpeed = 3f;
     public float fallMultiplier = 2.5f;
     public float jumpPower = 50f;
     public float jumpTime = 0.35f;
@@ -24,6 +25,9 @@ public class PlayerController : MonoBehaviour
     private float jumpTimeCounter;
     private bool isJumping;
 
+    // Crouching
+    private bool isCrouching;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +43,7 @@ public class PlayerController : MonoBehaviour
         horizontal = Input.GetAxisRaw("Horizontal");
 
         flipSprite();
+        crouch();
         jump();
     }
 
@@ -51,7 +56,11 @@ public class PlayerController : MonoBehaviour
     // Allow movement
     private void move(){
         // Set running animation
-        if (horizontal != 0 && isGrounded)
+        if (horizontal == 0 && isCrouching)
+            playerAnimation.SetAnimation("crouch");
+        else if (horizontal != 0 && isCrouching)
+            playerAnimation.SetAnimation("crouch walk");
+        else if (horizontal != 0 && isGrounded)
             playerAnimation.SetAnimation("running");
         else if (!isGrounded)
             playerAnimation.SetAnimation("jump");
@@ -59,7 +68,10 @@ public class PlayerController : MonoBehaviour
             playerAnimation.SetAnimation("idle");
 
         // Move player
-        body.velocity = new Vector2 (horizontal * speed, body.velocity.y);
+        if (isCrouching)
+            body.velocity = new Vector2 (horizontal * crouchSpeed, body.velocity.y);
+        else
+            body.velocity = new Vector2 (horizontal * speed, body.velocity.y);
     }
 
     // Better falling physics
@@ -93,6 +105,14 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyUp("space")){
             isJumping = false;
         }
+    }
+
+    // Allow player to crouch
+    private void crouch(){
+        if (isGrounded && vertical == -1)
+            isCrouching = true;
+        else
+            isCrouching = false;
     }
 
     // Flip sprite on direction change

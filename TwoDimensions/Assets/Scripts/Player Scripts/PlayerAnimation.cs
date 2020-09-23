@@ -16,12 +16,24 @@ public class PlayerAnimation : MonoBehaviour
         switch (anim){
             case "running":
                 animator.SetBool("isRunning", true);
+                animator.SetBool("isCrouching", false);
                 break;
             case "idle":
                 animator.SetBool("isRunning", false);
+                animator.SetBool("isCrouching", false);
+                Debug.Log("idle");
                 break;
             case "jump":
                 animator.Play("legjumpanim");
+                break;
+            case "crouch":
+                animator.SetBool("isCrouching", true);
+                animator.SetBool("isRunning", false);
+                Debug.Log("crouch");
+                break;
+            case "crouch walk":
+                animator.SetBool("isCrouching", true);
+                animator.SetBool("isRunning", true);
                 break;
         }
     }
