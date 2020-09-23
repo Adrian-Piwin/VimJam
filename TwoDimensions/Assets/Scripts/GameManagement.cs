@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class GameManagement : MonoBehaviour
 {
-    public GameObject door;
-    public float doorToggleTime = 1.3f;
+    public DoorManagement startingDoor;
 
     public List<GameObject> levels;
     public float levelLoadTime = 3f;
@@ -16,20 +15,12 @@ public class GameManagement : MonoBehaviour
     void Start()
     {
         loadNextLevel();
-        openDoor();
+        startingDoor.openDoor();
     }
 
     // Update is called once per frame
     void Update()
     {
-    }
-
-    private void openDoor(){
-        StartCoroutine(LerpPosition(door.transform.GetChild(0), door.transform.GetChild(1).position, doorToggleTime));
-    }
-
-    private void closeDoor(){
-        StartCoroutine(LerpPosition(door.transform.GetChild(0), door.transform.GetChild(2).position, doorToggleTime));
     }
 
     private void loadNextLevel(){

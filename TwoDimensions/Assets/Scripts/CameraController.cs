@@ -10,8 +10,6 @@ public class CameraController : MonoBehaviour
 
     public Transform leftLimit;
 
-    private bool following = true;
-
     // Update is called once per frame
     void FixedUpdate()
     {
