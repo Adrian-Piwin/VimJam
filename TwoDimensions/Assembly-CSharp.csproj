@@ -62,6 +62,7 @@
      <Compile Include="Assets\Cinemachine\Base\Runtime\Core\CinemachineExtension.cs" />
      <Compile Include="Assets\Cinemachine\Base\Runtime\Behaviours\CinemachineExternalCamera.cs" />
      <Compile Include="Assets\Cinemachine\Base\Runtime\Behaviours\CinemachineSmoother.cs" />
+     <Compile Include="Assets\Scripts\ButtonManager.cs" />
      <Compile Include="Assets\Cinemachine\Base\Runtime\Behaviours\CinemachineFreeLook.cs" />
      <Compile Include="Assets\Cinemachine\Base\Runtime\Core\CinemachineCore.cs" />
      <Compile Include="Assets\Cinemachine\PostFX\CinemachinePostProcessing.cs" />
@@ -83,6 +84,7 @@
      <Compile Include="Assets\Cinemachine\Base\Runtime\Components\CinemachineTrackedDolly.cs" />
      <Compile Include="Assets\Cinemachine\Base\Runtime\Behaviours\CinemachinePipeline.cs" />
      <Compile Include="Assets\Cinemachine\Base\Runtime\Behaviours\CinemachinePath.cs" />
+     <Compile Include="Assets\Scripts\DoorManagement.cs" />
      <Compile Include="Assets\Cinemachine\Base\Runtime\Core\CinemachineBlend.cs" />
      <Compile Include="Assets\Cinemachine\Base\Runtime\Core\ICinemachineCamera.cs" />
      <Compile Include="Assets\Scripts\DoorPassManager.cs" />
@@ -116,8 +118,7 @@
      <Compile Include="Assets\Cinemachine\Base\Runtime\Components\CinemachineBasicMultiChannelPerlin.cs" />
      <Compile Include="Assets\Cinemachine\Base\Runtime\Behaviours\CinemachineClearShot.cs" />
      <Compile Include="Assets\Scripts\Player Scripts\PlayerManager.cs" />
-     <Compile Include="Assets\Scripts\DoorManagement.cs" />
-     <Compile Include="Assets\Scripts\ButtonManager.cs" />
+     <Compile Include="Assets\Scripts\PlatformManagement.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
