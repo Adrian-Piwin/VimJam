@@ -21,7 +21,6 @@ public class PlayerAnimation : MonoBehaviour
             case "idle":
                 animator.SetBool("isRunning", false);
                 animator.SetBool("isCrouching", false);
-                Debug.Log("idle");
                 break;
             case "jump":
                 animator.Play("legjumpanim");
@@ -29,7 +28,6 @@ public class PlayerAnimation : MonoBehaviour
             case "crouch":
                 animator.SetBool("isCrouching", true);
                 animator.SetBool("isRunning", false);
-                Debug.Log("crouch");
                 break;
             case "crouch walk":
                 animator.SetBool("isCrouching", true);

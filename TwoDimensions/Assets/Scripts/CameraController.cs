@@ -4,33 +4,26 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public GameObject player;
-    public GameObject followCam;
-    public GameObject passiveCam;
+    public Transform target;
+    public float smoothSpeed = 0.125f;
+    public float deadzone = 3f;
 
     public Transform leftLimit;
-    public Transform rightLimit;
 
     private bool following = true;
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
-        if (following)
-            passiveCam.transform.position = new Vector3(player.transform.position.x, 0, passiveCam.transform.position.z);
-        else
-            followCam.transform.position = new Vector3(player.transform.position.x, 0, followCam.transform.position.z);
+        Vector3 newPos = transform.position;
+        newPos.x = target.position.x;
 
-        if (followCam.transform.position.x <= leftLimit.position.x){
-            following = false;
-            followCam.SetActive(false);
-            passiveCam.SetActive(true);
-        }else{
-            following = true;
-            followCam.SetActive(true);
-            passiveCam.SetActive(false);
-        }
+        Vector3 smoothedPosition = Vector3.Lerp(transform.position, newPos, smoothSpeed); 
+
+        if (smoothedPosition.x > leftLimit.position.x)
+            transform.position = smoothedPosition;
+
     }
 
 
