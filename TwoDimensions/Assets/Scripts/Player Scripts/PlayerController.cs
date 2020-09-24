@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("References")]
     public LayerMask groundLayers;
+    public ParticleSystem dust;
 
     private PlayerAnimation playerAnimation;
     private Rigidbody2D body;
@@ -127,8 +128,15 @@ public class PlayerController : MonoBehaviour
     // Check if grounded
     private void checkIsGrounded(){
         if (Physics2D.Raycast (boxCollider2d.bounds.center, Vector2.down, boxCollider2d.bounds.extents.y + distanceGround, groundLayers)){
+            if (!isGrounded) CreateDust();
+
             isGrounded = true;
         }else 
             isGrounded = false;
+    }
+
+    // Create dust particles 
+    private void CreateDust(){
+        dust.Play();
     }
 }

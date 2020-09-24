@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerKey : MonoBehaviour
 {
-    private bool isHoldingKey;
+    public bool isHoldingKey = false;
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "Key"){

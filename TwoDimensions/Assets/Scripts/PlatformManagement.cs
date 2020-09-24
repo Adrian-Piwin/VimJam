@@ -11,16 +11,15 @@ public class PlatformManagement : MonoBehaviour
     public Transform rightPos;
     public Transform leftPos;
 
-    private float time = 0;
+    private float timer = 0;
 
     // Update is called once per frame
     void Update()
     {
         if (canMove){
-            float pingPong = Mathf.PingPong(Time.time + time * speed, 1);
-            platform.position = Vector3.Lerp(leftPos.position, rightPos.position, pingPong);
-        }else{
-            time = Time.time;
+            timer += Time.deltaTime;
+            float pingPong = Mathf.PingPong(timer * speed, 1);
+            platform.position = Vector3.Lerp(rightPos.position, leftPos.position, pingPong);
         }
     }
 

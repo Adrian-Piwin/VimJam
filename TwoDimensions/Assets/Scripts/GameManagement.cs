@@ -9,18 +9,42 @@ public class GameManagement : MonoBehaviour
     public List<GameObject> levels;
     public float levelLoadTime = 3f;
 
+    private GameDialog gameDialog;
     private int currentLvl = -1;
 
     // Start is called before the first frame update
     void Start()
     {
-        loadNextLevel();
-        startingDoor.openDoor();
+        gameDialog = GetComponent<GameDialog>();
+
+        gameDialog.startDialog();
     }
 
     // Update is called once per frame
     void Update()
     {
+    }
+
+    public void playerPassedDoor(){
+        
+    }
+
+    // Dialog finished
+    public void dialogFinished(){
+        if (currentLvl != 3){
+            loadNextLevel();
+            StartCoroutine(openDoor(levelLoadTime+0.1f));
+        }
+    }
+
+    public void doorUnlocked(){
+        
+    }
+
+    // Open door on delay
+    IEnumerator openDoor(float timer){
+        yield return new WaitForSeconds(timer);
+        startingDoor.openDoor();
     }
 
     private void loadNextLevel(){
@@ -52,9 +76,5 @@ public class GameManagement : MonoBehaviour
         }
 
         original.position = targetPosition;
-    }
-
-    public void playerPassedDoor(){
-        
     }
 }

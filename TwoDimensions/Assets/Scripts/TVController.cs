@@ -10,16 +10,18 @@ public class TVController : MonoBehaviour
     public float letterRemoveSpeed = 0.01f;
 
     public TextMeshPro textObject;
+    private bool isEmpty = true;
 
     public void displayText(string txt){
         StartCoroutine(typeLetters(txt));
     }
 
-    public void removeText(){
+    private void removeText(){
         StartCoroutine(removeLetters());
     }
 
     IEnumerator typeLetters(string txt){
+        isEmpty = false;
         string displayText = "";
         foreach (char c in txt){
             yield return new WaitForSeconds(letterAddSpeed);
@@ -38,9 +40,15 @@ public class TVController : MonoBehaviour
             displayText = displayText.Remove(displayText.Length - 1, 1);
             updateText(displayText);
         }
+
+        isEmpty = true;
     }
 
     private void updateText(string txt){
         textObject.SetText(txt);
+    }
+
+    public bool getIsEmpty(){
+        return isEmpty;
     }
 }
