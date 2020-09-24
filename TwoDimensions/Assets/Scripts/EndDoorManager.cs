@@ -28,6 +28,9 @@ public class EndDoorManager : MonoBehaviour
 
     private void unlockLock(){
         for (int i = 0; i < lockStates.Count; i ++){
+            if (locks[i] == null)
+                continue;
+
             if (lockStates[i] == false){
                 Vector3 pos = locks[i].transform.position;
                 Transform parent = locks[i].transform.parent;
@@ -36,9 +39,8 @@ public class EndDoorManager : MonoBehaviour
                 Instantiate(unlockedLock, pos, Quaternion.identity, parent);
 
                 gameManagement.doorUnlocked();
-
                 break;
-            }
+            } 
         }
     }
 }

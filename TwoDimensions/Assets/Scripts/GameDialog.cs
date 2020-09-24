@@ -20,8 +20,6 @@ public class GameDialog : MonoBehaviour
 
         // Introduction
         dialogs.Add(new List<string>(){
-            "hello fucking idoit",
-            "NERD GO",
             "GOOD LUCK!"
         });
 

@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour
 
     // Allow player to crouch
     private void crouch(){
-        if (vertical == -1 || Physics2D.Raycast (boxCollider2d.bounds.center, Vector2.up, boxCollider2d.bounds.extents.y + (distanceGround*4), groundLayers))
+        if (vertical == -1 || (Physics2D.Raycast (boxCollider2d.bounds.center, Vector2.up, boxCollider2d.bounds.extents.y + (distanceGround*4), groundLayers) && isGrounded))
             isCrouching = true;
         else
             isCrouching = false;
