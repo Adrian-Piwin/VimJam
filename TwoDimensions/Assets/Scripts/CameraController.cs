@@ -25,5 +25,9 @@ public class CameraController : MonoBehaviour
 
     }
 
+    public void changeTarget(Transform newT){
+        target = newT;
+    }
+
 
 }

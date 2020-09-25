@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour
     // Crouching
     private bool isCrouching;
 
+    private bool canMove = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,12 +42,17 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        vertical = Input.GetAxisRaw("Vertical");
-        horizontal = Input.GetAxisRaw("Horizontal");
+        if (canMove){
+            vertical = Input.GetAxisRaw("Vertical");
+            horizontal = Input.GetAxisRaw("Horizontal");
 
-        flipSprite();
-        crouch();
-        jump();
+            flipSprite();
+            crouch();
+            jump();
+        }else{
+            vertical = 0;
+            horizontal = 0;
+        }
     }
 
     void FixedUpdate(){
@@ -127,7 +134,7 @@ public class PlayerController : MonoBehaviour
 
     // Check if grounded
     private void checkIsGrounded(){
-        if (Physics2D.Raycast (boxCollider2d.bounds.center, Vector2.down, boxCollider2d.bounds.extents.y + distanceGround, groundLayers)){
+        if (Physics2D.BoxCast (boxCollider2d.bounds.center, boxCollider2d.bounds.size,0, Vector2.down, distanceGround, groundLayers)){
             if (!isGrounded) CreateDust();
 
             isGrounded = true;
@@ -138,5 +145,9 @@ public class PlayerController : MonoBehaviour
     // Create dust particles 
     private void CreateDust(){
         dust.Play();
+    }
+
+    public void setCanMove(bool state){
+        canMove = state;
     }
 }

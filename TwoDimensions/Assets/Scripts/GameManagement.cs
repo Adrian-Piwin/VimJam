@@ -12,9 +12,12 @@ public class GameManagement : MonoBehaviour
 
     [Header("References")]
     public GameObject player;
+    public CameraController cameraController;
     public DoorManagement startingDoor;
+    public Transform startingDoorObj;
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI timer;
+    public GameObject gameOverMenu;
 
     private GameDialog gameDialog;
     private int currentLvl = -1;
@@ -23,6 +26,8 @@ public class GameManagement : MonoBehaviour
     private bool timerOn = false;
     private float currentTimer;
     private float time = 0;
+
+    private IEnumerator startGameOver;
 
     // Start is called before the first frame update
     void Start()
@@ -45,18 +50,22 @@ public class GameManagement : MonoBehaviour
             if (currentTimer <= 0){
                 updateTimer("0.00");
                 timerOn = false;
-                gameOver();
+                startGameOver = gameOver(1.5f);
+                cameraController.changeTarget(startingDoorObj);
+                StartCoroutine(startGameOver);
             }
         }
         
     }
 
     // Close door and game over
-    private void gameOver(){
+    IEnumerator gameOver(float time){
+        yield return new WaitForSeconds(time);
         startingDoor.closeDoor();
-        // game lost
-        // open menu to either go to menu
-        // or go to checkpoint
+        yield return new WaitForSeconds(time);
+        gameOverMenu.SetActive(true);
+        player.GetComponent<PlayerController>().setCanMove(false);
+        
     }
 
     private void gameWon(){
@@ -80,6 +89,8 @@ public class GameManagement : MonoBehaviour
         // stop/start timer
         if (player.GetComponent<PlayerKey>().getKeyState()){
             // stop timer
+            StopCoroutine(startGameOver);
+            cameraController.changeTarget(player.transform);
             timerOn = false;
             resetTimer();
             startingDoor.closeDoor();
@@ -113,6 +124,7 @@ public class GameManagement : MonoBehaviour
     private void resetTimer(){
         timerText.SetText("");
         timer.SetText("");
+        timer.color = new Color32(0, 0, 0, 255);
     }
 
     private void loadNextLevel(){
