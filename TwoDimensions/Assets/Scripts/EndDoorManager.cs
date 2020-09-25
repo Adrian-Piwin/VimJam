@@ -10,6 +10,7 @@ public class EndDoorManager : MonoBehaviour
 
     // False: Locked
     private List<bool> lockStates;
+    private int unlockedLocks = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +33,7 @@ public class EndDoorManager : MonoBehaviour
                 continue;
 
             if (lockStates[i] == false){
+
                 Vector3 pos = locks[i].transform.position;
                 Transform parent = locks[i].transform.parent;
 
@@ -42,5 +44,9 @@ public class EndDoorManager : MonoBehaviour
                 break;
             } 
         }
+    }
+
+    public void openDoor(){
+        GetComponent<Animator>().SetBool("doorOpened", true);
     }
 }

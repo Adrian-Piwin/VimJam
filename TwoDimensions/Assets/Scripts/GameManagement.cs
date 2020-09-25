@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManagement : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class GameManagement : MonoBehaviour
     [Header("References")]
     public GameObject player;
     public CameraController cameraController;
+    public EndDoorManager endDoor;
     public DoorManagement startingDoor;
     public Transform startingDoorObj;
     public TextMeshProUGUI timerText;
@@ -20,7 +22,7 @@ public class GameManagement : MonoBehaviour
     public GameObject gameOverMenu;
 
     private GameDialog gameDialog;
-    private int currentLvl = -1;
+    private int currentLvl;
     private GameObject currentLvlObj;
 
     private bool timerOn = false;
@@ -34,7 +36,7 @@ public class GameManagement : MonoBehaviour
     {
         gameDialog = GetComponent<GameDialog>();
 
-        gameDialog.startDialog();
+        gameDialog.startDialog(false);
     }
 
     void Update(){
@@ -68,19 +70,19 @@ public class GameManagement : MonoBehaviour
         
     }
 
-    private void gameWon(){
-        // game won      
-        // open main door
-        // take to win screen  
+    IEnumerator gameWon(){
+        yield return new WaitForSeconds(4f);
+        endDoor.openDoor();
+        SceneManager.LoadScene("WinScreen");
     }
 
     // Dialog finished
     public void dialogFinished(){
-        if (currentLvl != (levels.Count - 1)){
+        if (currentLvl != (levels.Count)){
             loadNextLevel();
             StartCoroutine(openDoor(levelLoadTime+0.3f));
         }else{
-            gameWon();
+            StartCoroutine(gameWon());
         }
     }
 
@@ -89,7 +91,8 @@ public class GameManagement : MonoBehaviour
         // stop/start timer
         if (player.GetComponent<PlayerKey>().getKeyState()){
             // stop timer
-            StopCoroutine(startGameOver);
+            if (startGameOver != null)
+                StopCoroutine(startGameOver);
             cameraController.changeTarget(player.transform);
             timerOn = false;
             resetTimer();
@@ -105,7 +108,7 @@ public class GameManagement : MonoBehaviour
 
     // Lock was taken off of final door
     public void doorUnlocked(){
-        gameDialog.startDialog();
+        gameDialog.startDialog(false);
     }
 
     // Open door on delay
@@ -130,14 +133,12 @@ public class GameManagement : MonoBehaviour
     private void loadNextLevel(){
         Vector3 newPos;
 
-        if (currentLvl != -1){
+        if (currentLvlObj != null){
             newPos = currentLvlObj.transform.position;
             newPos.y = -20;
             StartCoroutine(LerpPosition(currentLvlObj.transform, newPos, levelLoadTime));
             Destroy(currentLvlObj, levelLoadTime+0.5f);
         }
-
-        currentLvl ++;
 
         currentLvlObj = Instantiate(levels[currentLvl], null);
 
@@ -146,6 +147,7 @@ public class GameManagement : MonoBehaviour
         StartCoroutine(LerpPosition(currentLvlObj.transform, newPos, levelLoadTime));
 
         currentTimer = levelTimers[currentLvl];
+        currentLvl ++;
     }
 
     IEnumerator LerpPosition(Transform original, Vector3 targetPosition, float duration)

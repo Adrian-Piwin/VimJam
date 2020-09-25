@@ -11,6 +11,7 @@ public class GameDialog : MonoBehaviour
     private int currentDialog = 0;
     private int currentText = 0;
     private bool canType;
+    private bool skipDialog = false;
 
     // Start is called before the first frame update
     void Start()
@@ -20,25 +21,33 @@ public class GameDialog : MonoBehaviour
 
         // Introduction
         dialogs.Add(new List<string>(){
-            "GOOD LUCK!"
+            "Hello Subject 317",
+            "The door will open and as you enter the timer will start",
+            "Reach the end of the course and collect the key",
+            "Return with the key before the time runs out",
+            "Don't mess up"
         });
 
         // Level One completed
         dialogs.Add(new List<string>(){
-            "test1",
-            "test1"
+            "You've done well",
+            "Continue to do so"
         });
 
         // Level Two completed
         dialogs.Add(new List<string>(){
-            "test2",
-            "test2"
+            "You've made it quite farther than the others",
+            "Only one more key left",
+            "Try to be a bit quicker this time"
         });
 
         // Level Three completed (end)
         dialogs.Add(new List<string>(){
-            "test3",
-            "test3"
+            "I'm impressed",
+            "Your the first generation to make it this far",
+            "Oh, the door? There's nothing behind it",
+            "Anyways, I need to make room for the next generation",
+            "Good bye, 317"
         });
     }
 
@@ -47,6 +56,11 @@ public class GameDialog : MonoBehaviour
     {
         if (canType){
             if (tvController.getIsEmpty()){
+
+                if (skipDialog){
+                    currentText = dialogs.Count;
+                    skipDialog = false;
+                }
             
                 tvController.displayText(dialogs[currentDialog][currentText]);
                 currentText ++;
@@ -61,7 +75,8 @@ public class GameDialog : MonoBehaviour
         }
     }
 
-    public void startDialog(){
+    public void startDialog(bool skip){
         canType = true;
+        skipDialog = skip;
     }
 }
