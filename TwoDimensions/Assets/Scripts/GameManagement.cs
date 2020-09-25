@@ -36,7 +36,7 @@ public class GameManagement : MonoBehaviour
     {
         gameDialog = GetComponent<GameDialog>();
 
-        gameDialog.startDialog(false);
+        gameDialog.startDialog();
     }
 
     void Update(){
@@ -108,7 +108,7 @@ public class GameManagement : MonoBehaviour
 
     // Lock was taken off of final door
     public void doorUnlocked(){
-        gameDialog.startDialog(false);
+        gameDialog.startDialog();
     }
 
     // Open door on delay
@@ -128,6 +128,19 @@ public class GameManagement : MonoBehaviour
         timerText.SetText("");
         timer.SetText("");
         timer.color = new Color32(0, 0, 0, 255);
+    }
+
+    // Reset level on fail
+    public void resetLevel(){
+        resetTimer();
+        timerOn = false;
+        currentTimer = levelTimers[currentLvl-1];
+        player.transform.position = Vector3.zero;
+        startingDoor.openDoor();
+        gameOverMenu.SetActive(false);
+        player.GetComponent<PlayerController>().setCanMove(true);
+        player.GetComponent<PlayerKey>().setKeyState(false);
+        cameraController.changeTarget(player.transform);
     }
 
     private void loadNextLevel(){

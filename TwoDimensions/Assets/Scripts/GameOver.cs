@@ -5,8 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class GameOver : MonoBehaviour
 {
+    public GameManagement gameManagement;
+
     public void clickedTryAgain(){
-        SceneManager.LoadScene("MainScene");
+        gameManagement.resetLevel();
     }
 
     public void clickedMenu(){

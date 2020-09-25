@@ -75,8 +75,12 @@ public class GameDialog : MonoBehaviour
         }
     }
 
-    public void startDialog(bool skip){
+    public void resetDialog(){
+        skipDialog = true;
+        currentDialog--;
+    }
+
+    public void startDialog(){
         canType = true;
-        skipDialog = skip;
     }
 }
