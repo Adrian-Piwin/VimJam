@@ -136,11 +136,14 @@ public class GameManagement : MonoBehaviour
         timerOn = false;
         currentTimer = levelTimers[currentLvl-1];
         player.transform.position = Vector3.zero;
-        startingDoor.openDoor();
         gameOverMenu.SetActive(false);
         player.GetComponent<PlayerController>().setCanMove(true);
         player.GetComponent<PlayerKey>().setKeyState(false);
         cameraController.changeTarget(player.transform);
+
+        // Reset Level
+        currentLvl--;
+        gameDialog.resetDialog();
     }
 
     private void loadNextLevel(){

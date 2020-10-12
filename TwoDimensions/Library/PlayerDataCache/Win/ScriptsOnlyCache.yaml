@@ -1591,4 +1591,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/MainMenu.unity
   - Assets/Scenes/MainScene.unity
   - Assets/Scenes/WinScreen.unity
-  playerPath: C:/Users/Adrian/Desktop/fixed/Subject317.exe
+  playerPath: C:/Users/Adrian/Desktop/subject317/Subject317.exe

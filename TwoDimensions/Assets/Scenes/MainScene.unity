@@ -2714,8 +2714,8 @@ MonoBehaviour:
   - {fileID: 346749149893065133, guid: 37597afbef482ce42887400d536d299f, type: 3}
   levelTimers:
   - 80
-  - 120
   - 160
+  - 200
   levelLoadTime: 3
   player: {fileID: 217146906}
   cameraController: {fileID: 519420033}

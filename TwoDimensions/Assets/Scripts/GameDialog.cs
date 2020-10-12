@@ -58,7 +58,7 @@ public class GameDialog : MonoBehaviour
             if (tvController.getIsEmpty()){
 
                 if (skipDialog){
-                    currentText = dialogs.Count;
+                    currentText = dialogs[currentDialog].Count-1;
                     skipDialog = false;
                 }
             
@@ -78,6 +78,7 @@ public class GameDialog : MonoBehaviour
     public void resetDialog(){
         skipDialog = true;
         currentDialog--;
+        canType = true;
     }
 
     public void startDialog(){
